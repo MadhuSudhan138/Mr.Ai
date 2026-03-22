@@ -1,4 +1,7 @@
 import os
+import threading
+for flask import Flask
+
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from groq import Groq
@@ -47,6 +50,18 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+flask_app = Flask(__name__)
+
+@flask_app.route("/")
+def home():
+    return "Bot is running!"
+
+def run_web():
+    port = int(os.environ.get("PORT",10000))
+    flask_app.run(host="0.0.0.0",port=port)
+
+threading.Thread(target=run_web).start()
 
 print("Bot running...")
 app.run_polling()
