@@ -1,0 +1,4 @@
+python-telegram-bot
+groq
+pymongo
+bcrypt
