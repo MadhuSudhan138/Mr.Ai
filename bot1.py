@@ -56,6 +56,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply = "Hello 👋 How can I help you today?"
     elif msg in ["bye", "goodbye"]:
         reply = "Goodbye 👋 Have a great day!"
+    elif msg in ["hari","hari chand","sudeep","vinay","subhash","suresh","ganesh","rgv",]:
+        reply = "He is GAY🏳️‍🌈 💩"
     else:
         try:
             response = client.chat.completions.create(
