@@ -11,6 +11,12 @@ from pymongo import MongoClient
 from datetime import datetime
 
 # -----------------------
+# GLOBAL EVENT LOOP (FIX)
+# -----------------------
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+# -----------------------
 # CONFIG
 # -----------------------
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -44,11 +50,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "time": datetime.now()
     })
 
-    user_message_lower = user_message.lower()
+    msg = user_message.lower()
 
-    if user_message_lower in ["hi", "hello", "hey"]:
+    if msg in ["hi", "hello", "hey"]:
         reply = "Hello 👋 How can I help you today?"
-    elif user_message_lower in ["bye", "goodbye"]:
+    elif msg in ["bye", "goodbye"]:
         reply = "Goodbye 👋 Have a great day!"
     else:
         try:
@@ -70,14 +76,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(reply)
 
-# ------------------ COMMANDS ------------------
+# -----------------------
+# COMMANDS
+# -----------------------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hi there! 😊 What would you like to know?")
 
 async def clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.message.from_user.id)
     history.delete_many({"user_id": user_id})
-    await update.message.reply_text("Your data has been cleared 🧹")
+    await update.message.reply_text("Your data has been cleared 🧹 from our data base")
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Go and ask developer 😝")
@@ -91,17 +99,15 @@ telegram_app.add_handler(CommandHandler("help", help))
 telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 # -----------------------
-# WEBHOOK ROUTE
+# WEBHOOK
 # -----------------------
 @app.route(f"/{BOT_TOKEN}", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), telegram_app.bot)
 
-    # 🔥 FIX for Python 3.14
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(telegram_app.process_update(update))
-    loop.close()
+    loop.run_until_complete(
+        telegram_app.process_update(update)
+    )
 
     return "ok"
 
@@ -113,13 +119,9 @@ def home():
     return "Bot is running ✅"
 
 # -----------------------
-# START APP
+# START
 # -----------------------
 if __name__ == "__main__":
-    # 🔥 FIX for Python 3.14
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
     loop.run_until_complete(telegram_app.initialize())
     loop.run_until_complete(
         telegram_app.bot.set_webhook(f"{RENDER_URL}/{BOT_TOKEN}")
