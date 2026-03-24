@@ -13,11 +13,13 @@ import asyncio
 # -----------------------
 # CONFIG
 # -----------------------
-BOT_TOKEN = os.getenv("YOUR_BOT_TOKEN")
-GROQ_API_KEY = os.getenv("YOUR_GROQ_API_KEY")
-MONGO_URI = os.getenv("YOUR_MONGO_URI")
+import os
 
-RENDER_URL = os.environ.get("RENDER_URL") # 🔥 change this
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+MONGO_URI = os.getenv("MONGO_URI")
+
+RENDER_URL = os.environ("RENDER_URL") # 🔥 change this
 
 # -----------------------
 # INIT
