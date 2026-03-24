@@ -97,10 +97,11 @@ telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_
 def webhook():
     update = Update.de_json(request.get_json(force=True), telegram_app.bot)
 
-    # FIX: use event loop safely
-    asyncio.get_event_loop().run_until_complete(
-        telegram_app.process_update(update)
-    )
+    # 🔥 FIX for Python 3.14
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(telegram_app.process_update(update))
+    loop.close()
 
     return "ok"
 
@@ -115,7 +116,10 @@ def home():
 # START APP
 # -----------------------
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
+    # 🔥 FIX for Python 3.14
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
     loop.run_until_complete(telegram_app.initialize())
     loop.run_until_complete(
         telegram_app.bot.set_webhook(f"{RENDER_URL}/{BOT_TOKEN}")
