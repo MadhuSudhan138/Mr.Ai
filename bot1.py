@@ -19,7 +19,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 MONGO_URI = os.getenv("MONGO_URI")
 
-RENDER_URL = os.environ("RENDER_URL") # 🔥 change this
+RENDER_URL = os.environ.get("RENDER_URL") # 🔥 change this
 
 # -----------------------
 # INIT
