@@ -56,10 +56,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply = "Hello 👋 How can I help you today?"
     elif msg in ["bye", "goodbye"]:
         reply = "Goodbye 👋 Have a great day!"
-  #  elif msg in ["hari","hari chand","sudeep","vinay","subhash","suresh","ganesh","rgv",]:
-   #     reply = "He is GAY🏳️‍🌈 💩"
-   # elif msg in ["madhusudhan","madhu sudhan","madhu"]:
-    #    reply = "He is my God, the reason I exist. Someone like you isn’t worthy of knowing Him."
     else:
         try:
             response = client.chat.completions.create(
@@ -97,9 +93,9 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # -----------------------
 # ADD HANDLERS
 # -----------------------
-telegram_app.add_handler(CommandHandler("start", start))
-telegram_app.add_handler(CommandHandler("clear", clear))
-telegram_app.add_handler(CommandHandler("help", help))
+telegram_app.add_handler(CommandHandler("start Mr.Ai", start Mr.Ai))
+telegram_app.add_handler(CommandHandler("clear Mr.Ai", clear Mr.Ai))
+telegram_app.add_handler(CommandHandler("help MrAi", help Mr.Ai))
 telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 # -----------------------
