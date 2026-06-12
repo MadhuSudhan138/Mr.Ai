@@ -79,23 +79,23 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # -----------------------
 # COMMANDS
 # -----------------------
-async def start Mr.Ai(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start (update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hi there! 😊 What would you like to know?")
 
-async def clear Mr.Ai(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def clear (update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.message.from_user.id)
     history.delete_many({"user_id": user_id})
     await update.message.reply_text("Your data has been cleared 🧹 from our data base")
 
-async def help Mr.Ai(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def help (update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Go and ask developer 😝")
 
 # -----------------------
 # ADD HANDLERS
 # -----------------------
-telegram_app.add_handler(CommandHandler("start Mr.Ai", start ))
-telegram_app.add_handler(CommandHandler("clear Mr.Ai", clear ))
-telegram_app.add_handler(CommandHandler("help Mr.Ai", help ))
+telegram_app.add_handler(CommandHandler("start", start ))
+telegram_app.add_handler(CommandHandler("clear", clear ))
+telegram_app.add_handler(CommandHandler("help", help ))
 telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 # -----------------------
