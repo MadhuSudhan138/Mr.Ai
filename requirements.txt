@@ -1,5 +1,4 @@
 python-telegram-bot
 flask
-groq
-pymongo
-dnspython
+openai
+firebase-admin
